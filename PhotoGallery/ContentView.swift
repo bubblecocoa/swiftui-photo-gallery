@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import Photos
 
 struct ContentView: View {
     private static let initailColumns = 4
     
     @State private var numberOfColuns = initailColumns
     @State private var gridColumns = Array(repeating: GridItem(.flexible(), spacing: 1), count: initailColumns)
+    
+    @State private var images: [UIImage] = []
     
     var body: some View {
         VStack {
@@ -58,6 +61,35 @@ struct ContentView: View {
         withAnimation {
             numberOfColuns = count
             gridColumns = Array(repeating: GridItem(.flexible(), spacing: 1), count: count)
+        }
+    }
+    
+    private func loadImages() {
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+            if status == .authorized {
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.sortDescriptors = [
+                    NSSortDescriptor(key: "creationDate", ascending: false) // 최근 사진 순 정렬
+                ]
+                
+                let imageAssets = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+                
+                imageAssets.enumerateObjects { asset, _, _ in
+                    let requestOptions = PHImageRequestOptions()
+                    requestOptions.isSynchronous = true
+                    
+                    PHImageManager.default().requestImage(
+                        for: asset,
+                        targetSize: PHImageManagerMaximumSize,
+                        contentMode: .aspectFit,
+                        options: requestOptions
+                    ) { image, _ in
+                        if let image {
+                            images.append(image)
+                        }
+                    }
+                }
+            }
         }
     }
 }
