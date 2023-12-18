@@ -24,13 +24,15 @@ struct ContentView: View {
             // 사진(이미지)들
             ScrollView {
                 LazyVGrid(columns: gridColumns, spacing: 1) {
-                    ForEach((1...100), id: \.self) { number in
+                    ForEach(images, id: \.self) { image in
                         Button {
                             
                         } label: {
-                            Rectangle()
-                                .fill()
-                                .aspectRatio(contentMode: .fill)
+                            GeometryReader { geometry in
+                                Image(uiImage: image)
+                                    .resizable()
+                            }
+                            .aspectRatio(contentMode: .fill) // 정사각 형태
                         }
                     }
                 }
@@ -54,6 +56,9 @@ struct ContentView: View {
                 }
 
             }
+        }
+        .onAppear {
+            loadImages()
         }
     }
     
