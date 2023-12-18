@@ -15,18 +15,22 @@ struct ContentView: View {
     @State private var gridColumns = Array(repeating: GridItem(.flexible(), spacing: 1), count: initailColumns)
     
     @State private var images: [UIImage] = []
+    @State private var previewImage: UIImage?
     
     var body: some View {
         VStack {
             // 선택된 이미지 영역
-            Rectangle()
+            if let previewImage {
+                Image.init(uiImage: previewImage)
+                    .resizable()
+            }
             
             // 사진(이미지)들
             ScrollView {
                 LazyVGrid(columns: gridColumns, spacing: 1) {
                     ForEach(images, id: \.self) { image in
                         Button {
-                            
+                            previewImage = image
                         } label: {
                             GeometryReader { geometry in
                                 Image(uiImage: image)
