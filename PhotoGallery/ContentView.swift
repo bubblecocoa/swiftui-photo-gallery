@@ -8,14 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    private static let initailColumns = 4
+    
+    @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: initailColumns)
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            // 선택된 이미지 영역
+            Rectangle()
+            
+            // 사진(이미지)들
+            ScrollView {
+                LazyVGrid(columns: gridColumns) {
+                    ForEach((1...100), id: \.self) { number in
+                        Button {
+                            
+                        } label: {
+                            Rectangle()
+                                .fill()
+                                .aspectRatio(contentMode: .fill)
+                        }
+                    }
+                }
+            }
         }
-        .padding()
     }
 }
 
