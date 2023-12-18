@@ -33,6 +33,32 @@ struct ContentView: View {
             }
             .padding([.leading, .trailing], 10)
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button {
+                        
+                    } label: {
+                        Text("3개로 보기")
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Text("4개로 보기")
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Text("5개로 보기")
+                    }
+                } label: {
+                    Image(systemName: "circle.grid.3x3.circle")
+                }
+
+            }
+        }
     }
 }
 
