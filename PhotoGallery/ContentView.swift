@@ -37,19 +37,19 @@ struct ContentView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
                     Button {
-                        
+                        changeColumns(3)
                     } label: {
                         Text("3개로 보기")
                     }
                     
                     Button {
-                        
+                        changeColumns(4)
                     } label: {
                         Text("4개로 보기")
                     }
                     
                     Button {
-                        
+                        changeColumns(5)
                     } label: {
                         Text("5개로 보기")
                     }
@@ -58,6 +58,12 @@ struct ContentView: View {
                 }
 
             }
+        }
+    }
+    
+    private func changeColumns(_ count: Int) {
+        withAnimation {
+            gridColumns = Array(repeating: GridItem(.flexible(), spacing: 1), count: count)
         }
     }
 }
