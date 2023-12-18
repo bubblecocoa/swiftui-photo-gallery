@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     private static let initailColumns = 4
     
-    @State private var gridColumns = Array(repeating: GridItem(.flexible()), count: initailColumns)
+    @State private var gridColumns = Array(repeating: GridItem(.flexible(), spacing: 1), count: initailColumns)
     
     var body: some View {
         VStack {
@@ -19,7 +19,7 @@ struct ContentView: View {
             
             // 사진(이미지)들
             ScrollView {
-                LazyVGrid(columns: gridColumns) {
+                LazyVGrid(columns: gridColumns, spacing: 1) {
                     ForEach((1...100), id: \.self) { number in
                         Button {
                             
@@ -31,6 +31,7 @@ struct ContentView: View {
                     }
                 }
             }
+            .padding([.leading, .trailing], 10)
         }
     }
 }
